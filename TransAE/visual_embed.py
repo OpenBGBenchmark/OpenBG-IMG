@@ -43,7 +43,6 @@ entity_ids = []
 batch_size = 0 
 batch_dim = 128
 with open("./data/OpenBG-IMG/entity2id.txt", "r") as enidf:
-    count = 0
     for line in tqdm(enidf.readlines()[1:]):
         entity = line.split('\t')[0]
         #print(entity)
@@ -60,35 +59,35 @@ with open("./data/OpenBG-IMG/entity2id.txt", "r") as enidf:
             except:
                 #print(filename+" did not load")
                 pass
-    print(count)
-        # if len(input_img) > 0 and batch_size + len(input_img) <= batch_dim:
-        #     input_img = torch.stack(input_img, dim=0) 
-        #     all_input_img.append(input_img)
-        #     batch_size += len(input_img)
-        #     #print(batch_size)
-        #     entity_ids.append(entity)
-        # elif len(input_img) > 0 and batch_size + len(input_img) > batch_dim:
-        #     lengths = [len(item) for item in all_input_img]
-        #     vgg_input = torch.cat(all_input_img, dim=0) 
-        #     result = vgg16(vgg_input)
-        #     results_split = torch.split(result, lengths)
-        #     for index, item in enumerate(results_split):
-        #         embed = item.mean(0)
-        #         #print(embed.size())
-        #         if not os.path.exists("./data/OpenBG-IMG/img_em/" + entity_ids[index]):
-        #             os.mkdir("./data/OpenBG-IMG/img_em/" + entity_ids[index])
-        #         with open("./data/OpenBG-IMG/img_em/" + entity_ids[index] + "/avg_embedding.pkl", "wb+") as f:
-        #             pickle.dump(embed, f)
+        
+        if len(input_img) > 0 and batch_size + len(input_img) <= batch_dim:
+            input_img = torch.stack(input_img, dim=0) 
+            all_input_img.append(input_img)
+            batch_size += len(input_img)
+            #print(batch_size)
+            entity_ids.append(entity)
+        elif len(input_img) > 0 and batch_size + len(input_img) > batch_dim:
+            lengths = [len(item) for item in all_input_img]
+            vgg_input = torch.cat(all_input_img, dim=0) 
+            result = vgg16(vgg_input)
+            results_split = torch.split(result, lengths)
+            for index, item in enumerate(results_split):
+                embed = item.mean(0)
+                #print(embed.size())
+                if not os.path.exists("./data/OpenBG-IMG/img_em/" + entity_ids[index]):
+                    os.mkdir("./data/OpenBG-IMG/img_em/" + entity_ids[index])
+                with open("./data/OpenBG-IMG/img_em/" + entity_ids[index] + "/avg_embedding.pkl", "wb+") as f:
+                    pickle.dump(embed, f)
                 
             
-        #     # reinitialize
-        #     all_input_img = []
-        #     batch_size = 0 
-        #     entity_ids = []
-        #     # add the remanent into it
-        #     input_img = torch.stack(input_img, dim=0) 
-        #     all_input_img.append(input_img)
-        #     batch_size += len(input_img)
-        #     #print(batch_size)
-        #     entity_ids.append(entity)
+            # reinitialize
+            all_input_img = []
+            batch_size = 0 
+            entity_ids = []
+            # add the remanent into it
+            input_img = torch.stack(input_img, dim=0) 
+            all_input_img.append(input_img)
+            batch_size += len(input_img)
+            #print(batch_size)
+            entity_ids.append(entity)
             
