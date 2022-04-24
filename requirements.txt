@@ -1,0 +1,11 @@
+transformers==4.11.3
+pytorch==1.7.0
+tensorboardX==2.4
+torchvision==0.8.2
+torch==1.7.1
+pytorch_pretrained_vit==0.0.7
+numpy==1.20.3
+tokenizers==0.10.3
+tqdm==4.49.0
+imagehash==4.2.1
+pillow==8.2.0
