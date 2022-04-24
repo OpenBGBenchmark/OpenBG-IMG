@@ -42,24 +42,22 @@ all_input_img = []
 entity_ids = []
 batch_size = 0 
 batch_dim = 128
+count = 0
 with open("./data/OpenBG-IMG/entity2id.txt", "r") as enidf:
     for line in tqdm(enidf.readlines()[1:]):
         entity = line.split('\t')[0]
         #print(entity)
         entity = entity.replace('/', '.')
         input_img = []
-        
         for filename in glob.glob("../data/OpenBG-IMG/images/"+entity+"/*.*"):
             #print(filename)
             try:
                 im=Image.open(filename)
                 im = transformation_model(im)
                 input_img.append(im)
-                count += 1
             except:
                 #print(filename+" did not load")
                 pass
-        
         if len(input_img) > 0 and batch_size + len(input_img) <= batch_dim:
             input_img = torch.stack(input_img, dim=0) 
             all_input_img.append(input_img)
@@ -78,8 +76,8 @@ with open("./data/OpenBG-IMG/entity2id.txt", "r") as enidf:
                     os.mkdir("./data/OpenBG-IMG/img_em/" + entity_ids[index])
                 with open("./data/OpenBG-IMG/img_em/" + entity_ids[index] + "/avg_embedding.pkl", "wb+") as f:
                     pickle.dump(embed, f)
-                
-            
+                    count += 1
+
             # reinitialize
             all_input_img = []
             batch_size = 0 
@@ -90,4 +88,19 @@ with open("./data/OpenBG-IMG/entity2id.txt", "r") as enidf:
             batch_size += len(input_img)
             #print(batch_size)
             entity_ids.append(entity)
+    
+    if len(all_input_img) > 0:
+        lengths = [len(item) for item in all_input_img]
+        vgg_input = torch.cat(all_input_img, dim=0) 
+        result = vgg16(vgg_input)
+        results_split = torch.split(result, lengths)
+        for index, item in enumerate(results_split):
+            embed = item.mean(0)
+            #print(embed.size())
+            if not os.path.exists("./data/OpenBG-IMG/img_em/" + entity_ids[index]):
+                os.mkdir("./data/OpenBG-IMG/img_em/" + entity_ids[index])
+            with open("./data/OpenBG-IMG/img_em/" + entity_ids[index] + "/avg_embedding.pkl", "wb+") as f:
+                pickle.dump(embed, f)
+                count += 1
             
+print(count)
