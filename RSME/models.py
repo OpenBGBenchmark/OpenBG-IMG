@@ -24,7 +24,7 @@ class KBCModel(nn.Module, ABC):
     def get_ranking(
             self, queries: torch.Tensor,
             filters: Dict[Tuple[int, int], List[int]],
-            batch_size: int = 1000, chunk_size: int = -1
+            batch_size: int = 1000, chunk_size: int = -1, predict = False
     ):
         """
         Returns filtered ranking for each queries.
@@ -70,7 +70,8 @@ class KBCModel(nn.Module, ABC):
                         scores=beta*scores_str+(1-beta)*score_img*self.rel_pd[these_queries[:,1]]
                     else:
                         scores = beta * scores_str + (1 - beta) * score_img
-                    # targets = self.score(these_queries)
+                    if not predict:
+                        targets = self.score(these_queries)
                     for i, query in enumerate(these_queries):
                         filter_out = filters[(query[0].item(), query[1].item())]
                         filter_out += [queries[b_begin + i, 2].item()]
@@ -83,19 +84,23 @@ class KBCModel(nn.Module, ABC):
                         else:
                             scores[i, torch.LongTensor(filter_out)] = -1e6
 
-                        
-                    # ranks[b_begin:b_begin + batch_size] += torch.sum(
-                    #     (scores >=targets).float(), dim=1
-                    # ).cpu()
-                    for i in range(len(these_queries)):
-                        score_one = scores[i]
-                        res = [str(i.item()) for i in torch.topk(score_one, k = 10, largest = True).indices]
-                        with open('./results/result.txt','a+') as fp:
-                            fp.write(f"{these_queries[i][0]} {these_queries[i][1]} {' '.join(res)}\n")
+                    if not predict:
+                        ranks[b_begin:b_begin + batch_size] += torch.sum(
+                            (scores >=targets).float(), dim=1
+                        ).cpu()
+                    else:
+                        for i in range(len(these_queries)):
+                            score_one = scores[i]
+                            res = [str(i.item()) for i in torch.topk(score_one, k = 10, largest = True).indices]
+                            with open('./results/result.txt','a+') as fp:
+                                fp.write(f"{these_queries[i][0]} {these_queries[i][1]} {' '.join(res)}\n")
                     b_begin += batch_size
 
                 c_begin += chunk_size
-        return ranks
+        if not predict:
+            return ranks
+        else:
+            return
 
 
 class CP(KBCModel):

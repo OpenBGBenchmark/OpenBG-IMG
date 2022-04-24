@@ -1,5 +1,4 @@
 from pathlib import Path
-import pkg_resources
 import pickle
 from typing import Dict, Tuple, List
 
@@ -82,6 +81,43 @@ class Dataset(object):
                 q[:, 2] = tmp
                 q[:, 1] += self.n_predicates // 2
             model.get_ranking(q, self.to_skip[m], batch_size=500)
+            ranks = model.get_ranking(q, self.to_skip[m], batch_size=500)
+            mean_rank[m] = torch.mean(ranks).item()
+            mean_reciprocal_rank[m] = torch.mean(1. / ranks).item()
+            hits_at[m] = torch.FloatTensor((list(map(
+                lambda x: torch.mean((ranks <= x).float()).item(),
+                at
+            ))))
+
+        return mean_reciprocal_rank, mean_rank, hits_at
+
+    def predict(
+            self, model: KBCModel, split: str, n_queries: int = -1, missing_eval: str = 'rhs',
+            at: Tuple[int] = (1, 3, 10)
+    ):
+        if not os.path.exists('./results'):
+            os.mkdir('./results/')
+        test = self.get_examples(split)
+        examples = torch.from_numpy(test.astype('int64')).cuda()
+        missing = [missing_eval]
+        if missing_eval == 'both':
+            missing = ['rhs', 'lhs']
+
+        mean_reciprocal_rank = {}
+        mean_rank = {}
+        hits_at = {}
+
+        for m in missing:
+            q = examples.clone()
+            if n_queries > 0:
+                permutation = torch.randperm(len(examples))[:n_queries]
+                q = examples[permutation]
+            if m == 'lhs':
+                tmp = torch.clone(q[:, 0])
+                q[:, 0] = q[:, 2]
+                q[:, 2] = tmp
+                q[:, 1] += self.n_predicates // 2
+            model.get_ranking(q, self.to_skip[m], batch_size=500, predict = True)
             # ranks = model.get_ranking(q, self.to_skip[m], batch_size=500)
             # mean_rank[m] = torch.mean(ranks).item()
             # mean_reciprocal_rank[m] = torch.mean(1. / ranks).item()

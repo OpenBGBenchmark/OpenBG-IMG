@@ -9,7 +9,7 @@ from models import CP, ComplEx
 from regularizers import F2, N3
 from optimizers import KBCOptimizer
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "2"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 torch.backends.cudnn.enabled = True
 torch.backends.cudnn.benchmark = True
 
@@ -127,17 +127,17 @@ curve = {'train': [], 'valid': [], 'test': []}
 for e in range(args.max_epochs):
     cur_loss = optimizer.epoch(examples)
 
-    # if (e + 1) % args.valid == 0:
-    #     valid, train = [
-    #         avg_both(*dataset.eval(model, split, -1 if split != 'train' else 50000))
-    #         for split in ['valid', 'train']
-    #     ]
+    if (e + 1) % args.valid == 0:
+        valid, train = [
+            avg_both(*dataset.eval(model, split, -1 if split != 'train' else 50000))
+            for split in ['valid', 'train']
+        ]
 
-    #     curve['valid'].append(valid)
-    #     curve['train'].append(train)
+        curve['valid'].append(valid)
+        curve['train'].append(train)
 
-    #     print("\t TRAIN: ", train)
-    #     print("\t VALID : ", valid)
+        print("\t TRAIN: ", train)
+        print("\t VALID : ", valid)
 
 if not os.path.exists('./checkpoints'):
     os.mkdir('./checkpoints/')
@@ -148,4 +148,4 @@ torch.save(model.state_dict(), PATH)
 model.load_state_dict(torch.load(PATH))
 model.eval()
 
-dataset.eval(model, 'test', -1)
+dataset.predict(model, 'test', -1)
