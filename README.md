@@ -64,8 +64,8 @@ data
 - 获取图片表示和编码
 
 ```shell
-cd RSME
-bash scripts/visual_emb.sh
+    cd RSME
+    bash scripts/visual_emb.sh
 ```
 
 - 数据预处理
