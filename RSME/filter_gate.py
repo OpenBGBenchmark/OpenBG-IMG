@@ -63,4 +63,8 @@ class FilterGate():
 if __name__ == '__main__':
     f=FilterGate('../data/OpenBG-IMG/images/',hash_size=16)
     f.filter()
+    if not os.path.exists('./data'):
+        os.mkdir('./data/')
+    if not os.path.exists('./data/OpenBG-IMG'):
+        os.mkdir('./data/OpenBG-IMG/')
     f.save_best_imgs('./data/OpenBG-IMG/openbg_best_img.pickle')
