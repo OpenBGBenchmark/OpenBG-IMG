@@ -89,3 +89,7 @@ data
 - [https://github.com/wangmengsd/RSME](https://github.com/wangmengsd/RSME)
 
 十分感谢！
+
+# 更多相关工作
+
+关于多模态知识图谱构建和补全的开源工作请参见MKGFormer([https://github.com/zjunlp/MKGformer/](https://github.com/zjunlp/MKGformer/))
