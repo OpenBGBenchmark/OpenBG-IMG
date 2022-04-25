@@ -1,5 +1,4 @@
 transformers==4.11.3
-pytorch==1.7.0
 tensorboardX==2.4
 torchvision==0.8.2
 torch==1.7.1
