@@ -1,0 +1,3 @@
+[submodule "OpenKE"]
+	path = OpenKE
+	url = git@github.com:thunlp/OpenKE.git
