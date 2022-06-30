@@ -14,6 +14,7 @@ import ctypes
 import pickle
 from dataloader import TrainDataLoader, TestDataLoader
 
+RES = 'result.txt'
 
 class Trainer(object):
 
@@ -407,6 +408,11 @@ class TransE(nn.Module):
                 b= self.embedding_range.item()
             )
 
+        if not os.path.exists('./results'):
+            os.mkdir('./results/')
+        with open(f'./results/{RES}','w') as _:
+            pass
+
         if margin != None:
             self.margin = nn.Parameter(torch.Tensor([margin]))
             self.margin.requires_grad = False
@@ -465,10 +471,8 @@ class TransE(nn.Module):
         score = self.forward(data)
 
         if data['mode'] == 'tail_batch':
-            if not os.path.exists('./results'):
-                os.mkdir('./results/')
             res = [str(i.item()) for i in torch.topk(score, k = 10, largest = False).indices]
-            with open('./results/result.txt','a+') as fp:
+            with open(f'./results/{RES}','a+') as fp:
                 fp.write(f"{data['batch_h'][0]} {data['batch_r'][0]} {' '.join(res)}\n")
         
         if self.margin_flag:
@@ -575,10 +579,8 @@ class TransE_raw(nn.Module):
         score = self.forward(data)
 
         if data['mode'] == 'tail_batch':
-            if not os.path.exists('./results'):
-                os.mkdir('./results/')
             res = [str(i.item()) for i in torch.topk(score, k = 10, largest = False).indices]
-            with open('./results/result.txt','a+') as fp:
+            with open('./results/{RES}','a+') as fp:
                 fp.write(f"{data['batch_h'][0]} {data['batch_r'][0]} {' '.join(res)}\n")
 
         if self.margin_flag:

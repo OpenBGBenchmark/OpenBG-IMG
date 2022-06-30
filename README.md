@@ -1,6 +1,6 @@
 # OpenBG-IMG基准
 
-OpenBG-IMG是电子商务领域的多模态数据集，本基准使用了TransAE和RSME模型进行链接预测，用于生成[CCKS2022面向数字商务的知识处理与应用评测任务三：多模态商品知识图谱链接预测](https://tianchi.aliyun.com/competition/entrance/531957/introduction)的评测基准，评测结果请在阿里天池平台进行提交。
+OpenBG-IMG是电子商务领域的多模态数据集，本基准使用了多种知识图谱嵌入模型进行链接预测，用于生成[CCKS2022面向数字商务的知识处理与应用评测任务三：多模态商品知识图谱链接预测](https://tianchi.aliyun.com/competition/entrance/531957/introduction)的评测基准，评测结果请在阿里天池平台进行提交。
 
 # 环境配置
 
@@ -25,6 +25,30 @@ data
 
 # 如何运行
 
+
+## TransE & TransH & TransE & DistMult & ComplEx
+
+模型参考并修改了[OpenKE](https://github.com/thunlp/OpenKE)中的实现。
+
+- 编译C++代码
+
+```shell
+    cd 模型目录
+    bash scripts/make.sh
+```
+
+- 数据预处理
+
+```shell
+    bash scripts/prepro.sh
+```
+
+- 训练模型并预测结果，结果保存在`./results/result.tsv`
+
+
+```shell
+    bash scripts/train.sh
+```
 
 ## TransAE
 

@@ -1,2 +1,2 @@
 python TransAE.py
-python gen_result.py
+python ../utils/gen_result.py
