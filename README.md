@@ -50,6 +50,23 @@ data
     bash scripts/train.sh
 ```
 
+## TuckER
+
+模型参考并修改了[TuckER](https://github.com/ibalazevic/TuckER)中的实现。
+
+- 数据预处理
+
+```shell
+    bash scripts/prepro.sh
+```
+
+- 训练模型并预测结果，结果保存在`./results/result.tsv`
+
+
+```shell
+    bash scripts/train.sh
+```
+
 ## TransAE
 
 本模型参考了[OpenKE](https://github.com/thunlp/OpenKE)中TransE模型的实现以及[TransAE](https://github.com/ksolaiman/TransAE)中对图片的表示和编码。
@@ -109,6 +126,7 @@ data
 此代码参考了以下代码：
 
 - [https://github.com/thunlp/OpenKE](https://github.com/thunlp/OpenKE)
+- [https://github.com/ibalazevic/TuckER](https://github.com/ibalazevic/TuckER)
 - [https://github.com/ksolaiman/TransAE](https://github.com/ksolaiman/TransAE)
 - [https://github.com/wangmengsd/RSME](https://github.com/wangmengsd/RSME)
 
