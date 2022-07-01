@@ -1,6 +1,6 @@
 python -u train_tucker.py \
 --dataset OpenBG-IMG \
---num_iterations 2 \
+--num_iterations 500 \
 --batch_size 200 \
 --lr 0.0005 \
 --dr 1.0 \
