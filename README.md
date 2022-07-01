@@ -1,6 +1,10 @@
 # OpenBG-IMG基准
 
-OpenBG-IMG是电子商务领域的多模态数据集，本基准使用了多种知识图谱嵌入模型进行链接预测，用于生成[CCKS2022面向数字商务的知识处理与应用评测任务三：多模态商品知识图谱链接预测](https://tianchi.aliyun.com/competition/entrance/531957/introduction)的评测基准，评测结果请在阿里天池平台进行提交。
+<p align="left">
+    <b> 简体中文 | <a href="https://github.com/OpenBGBenchmark/OpenBG-IMG/blob/main/README_EN.md">English</a> </b>
+</p>
+
+OpenBG-IMG是电子商务领域的多模态数据集，本基准使用了多种知识图谱嵌入模型进行链接预测，用于生成[CCKS2022面向数字商务的知识处理与应用评测任务三：多模态商品知识图谱链接预测](https://tianchi.aliyun.com/competition/entrance/531957/introduction)的评测结果，评测结果请在阿里天池平台进行提交。
 
 # 环境配置
 
@@ -120,6 +124,19 @@ data
 ```shell
     bash scripts/train.sh
 ```
+
+# 实验结果
+
+|Model		|HIT@1  |HIT@3 |HIT@10| MR  | MRR |
+|:-		|:-:	|:-:   |:-:   |:-:  |:-:  |
+|TransE	    |0.150  |0.387 |0.647 |118  |0.315|
+|TransH 	|0.129  |0.525 |0.743 |112  |0.357|
+|TransD	    |0.137  |0.532 |0.746 |110  |0.364|
+|DistMult	|0.060  |0.157 |0.279 |524  |0.139|
+|ComplEx	|0.143  |0.244 |0.371 |782  |0.221|
+|TuckER	    |0.497  |0.690 |0.820 |1473 |0.611|
+|TransAE	|0.274  |0.489 |0.715 |36.1 |0.421|
+|RSME       |0.485  |0.687 |0.838 |72.1 |0.607|
 
 # 致谢
 
