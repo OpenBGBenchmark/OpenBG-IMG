@@ -23,6 +23,22 @@ data
  |    |-- test.tsv          # Test set
 ```
 
+The statistics of OpenBG-IMG：
+|    Dataset    |    # Ent   | # Rel |   # Train   |  # Dev  | # Test  |
+| ------------- | ---------- | ----- | ----------- | ------- | ------- |
+|   OpenBG-IMG  | 27,910†     |  136  | 230,087     | 5,000   | 14,675  |
+
+†: there are 14,718 multi-modal entities in OpenBG-IMG.
+
+#### Check the data
+
+```
+$ head -n 3 train.tsv
+ent_021198	rel_0031	ent_017656
+ent_008185	rel_0092	ent_025949
+ent_005940	rel_0080	ent_020805
+```
+
 # Quick Start
 
 
