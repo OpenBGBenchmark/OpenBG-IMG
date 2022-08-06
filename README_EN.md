@@ -1,6 +1,6 @@
 # OpenBG-IMG Benchmark
 
-OpenBG-IMG is a multi-modal dataset in the field of e-commerce. This benchmark implements a variety of knowledge graph embedding models for link prediction, which is used to generate evaluation results of[CCKS2022 Knowledge Processing and Application Evaluation for Digital Commerce Task 3: Multimodal Commodity Knowledge Graph Link Prediction](https://tianchi.aliyun.com/competition/entrance/531957/introduction). Please submit the results to TIANCHI platform.
+OpenBG-IMG is a multi-modal dataset in the field of e-commerce. This benchmark implements a variety of knowledge graph embedding models for link prediction, which is used to generate evaluation results of [CCKS2022 Knowledge Processing and Application Evaluation for Digital Commerce Task 3: Multimodal Commodity Knowledge Graph Link Prediction](https://tianchi.aliyun.com/competition/entrance/531957/introduction). Please submit the results to TIANCHI platform.
 
 # Requirements
 

@@ -6,14 +6,14 @@
 
 OpenBG-IMG是电子商务领域的多模态数据集，本基准使用了多种知识图谱嵌入模型进行链接预测，用于生成[CCKS2022面向数字商务的知识处理与应用评测任务三：多模态商品知识图谱链接预测](https://tianchi.aliyun.com/competition/entrance/531957/introduction)的评测结果，评测结果请在阿里天池平台进行提交。
 
-# 环境配置
+## 环境配置
 
 使用以下代码进行环境配置
 ```
 pip install -r requirements.txt
 ```
 
-# 数据集格式
+## 数据集
 
 请将天池平台上的数据放置在`./data/`，数据目录如下
 
@@ -27,10 +27,26 @@ data
  |    |-- test.tsv          # 测试集数据
 ```
 
-# 如何运行
+数据集统计数据如下：
+|    Dataset    |    # Ent   | # Rel |   # Train   |  # Dev  | # Test  |
+| ------------- | ---------- | ----- | ----------- | ------- | ------- |
+|   OpenBG-IMG  | 27,910†     |  136  | 230,087     | 5,000   | 14,675  |
+
+†:实体中有14,718个多模态实体
+
+#### 查看数据集数据
+
+```
+$ head -n 3 train.tsv
+ent_021198	rel_0031	ent_017656
+ent_008185	rel_0092	ent_025949
+ent_005940	rel_0080	ent_020805
+```
+
+## 如何运行
 
 
-## TransE & TransH & TransE & DistMult & ComplEx
+### TransE & TransH & TransE & DistMult & ComplEx
 
 模型参考并修改了[OpenKE](https://github.com/thunlp/OpenKE)中的实现。
 
@@ -54,7 +70,7 @@ data
     bash scripts/train.sh
 ```
 
-## TuckER
+### TuckER
 
 模型参考并修改了[TuckER](https://github.com/ibalazevic/TuckER)中的实现。
 
@@ -71,7 +87,7 @@ data
     bash scripts/train.sh
 ```
 
-## TransAE
+### TransAE
 
 本模型参考了[OpenKE](https://github.com/thunlp/OpenKE)中TransE模型的实现以及[TransAE](https://github.com/ksolaiman/TransAE)中对图片的表示和编码。
 
@@ -102,7 +118,7 @@ data
     bash scripts/train.sh
 ```
 
-## RSME
+### RSME
 
 本模型参考了[RSME](https://github.com/wangmengsd/RSME)的官方代码。
 
@@ -125,7 +141,7 @@ data
     bash scripts/train.sh
 ```
 
-# 实验结果
+## 实验结果
 
 |Model		|HIT@1  |HIT@3 |HIT@10| MR  | MRR |
 |:-		|:-:	|:-:   |:-:   |:-:  |:-:  |
@@ -138,7 +154,7 @@ data
 |TransAE	|0.274  |0.489 |0.715 |36.1 |0.421|
 |RSME       |0.485  |0.687 |0.838 |72.1 |0.607|
 
-# 致谢
+## 致谢
 
 此代码参考了以下代码：
 
@@ -149,6 +165,6 @@ data
 
 十分感谢！
 
-# 更多相关工作
+## 更多相关工作
 
 关于多模态知识图谱构建和补全的开源工作请参见MKGFormer([https://github.com/zjunlp/MKGformer/](https://github.com/zjunlp/MKGformer/))
