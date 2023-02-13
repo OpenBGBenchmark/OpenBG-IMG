@@ -15,6 +15,8 @@ pip install -r requirements.txt
 
 ## 数据集
 
+- [https://drive.google.com/file/d/1jg4YcFgOfgjUJCnxBjw9w-6ID8VS_L-X/view?usp=sharing](https://drive.google.com/file/d/1jg4YcFgOfgjUJCnxBjw9w-6ID8VS_L-X/view?usp=sharing)
+
 请将天池平台上的数据放置在`./data/`，数据目录如下
 
 ```
