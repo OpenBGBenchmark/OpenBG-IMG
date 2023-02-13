@@ -11,6 +11,8 @@ pip install -r requirements.txt
 
 # Dataset
 
+- [https://drive.google.com/file/d/1jg4YcFgOfgjUJCnxBjw9w-6ID8VS_L-X/view?usp=sharing](https://drive.google.com/file/d/1jg4YcFgOfgjUJCnxBjw9w-6ID8VS_L-X/view?usp=sharing)
+
 Please download the dataset from TIANCHI to the directory `./data/`.
 
 ```
